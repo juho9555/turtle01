@@ -75,14 +75,7 @@ def is_arrived(t, target_x, target_y, tolerance=100):
     """
     current_x, current_y = t.position()
     distance = math.sqrt((target_x - current_x) ** 2 + (target_y - current_y) ** 2)
-    return distance <= tolerance
-
-# 거북이가 이동 후 출력
-if is_arrived(t, 300, 100):
-    print("목표 지점에 도착했습니다!")
-else:
-    print("아직 목표 지점에 도달하지 못했습니다.")
-    
+    return distance <= tolerance    
     
 # 거북이 충돌 감지 함수
 def is_collided_with_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
@@ -96,6 +89,13 @@ def is_collided_with_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
         return True
     else:
         return False
+    
+    
+# 도착 여부 출력
+if is_arrived(t, 300, 100):
+    print("목표 지점에 도착했습니다!")
+else:
+    print("아직 목표 지점에 도달하지 못했습니다.")
     
 # 장애물 충돌 여부 출력
 if is_collided_with_obstacle(t, 0, -100, 100, 0):
