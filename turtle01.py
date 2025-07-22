@@ -82,4 +82,23 @@ if is_arrived(t, 300, 100):
     print("목표 지점에 도착했습니다!")
 else:
     print("아직 목표 지점에 도달하지 못했습니다.")
-
+    
+    
+# 거북이 충돌 감지 함수
+def is_collided_with_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
+    """
+    t: 거북이 객체
+    obs_x1, obs_y1: 사각형 왼쪽 아래 꼭짓점
+    obs_x2, obs_y2: 사각형 오른쪽 위 꼭짓점
+    """
+    x, y = t.position()
+    if obs_x1 <= x <= obs_x2 and obs_y1 <= y <= obs_y2:
+        return True
+    else:
+        return False
+    
+# 장애물 충돌 여부 출력
+if is_collided_with_obstacle(t, 0, -100, 100, 0):
+    print("장애물에 충돌했습니다!")
+else:
+    print("장애물 피하기 성공!")
