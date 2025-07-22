@@ -1,6 +1,7 @@
 import turtle
 import math
 import time
+import random
 
 #screen 생성
 s = turtle.getscreen()
@@ -52,18 +53,23 @@ def is_collided_with_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
     
 
 # 장애물 회피 함수 구현
-def avoid_obstacle(t):
-
-# 장애물이 감지되면 오른쪽으로 30도 틀고 전진
-
-    print("장애물 충돌! 후진하여 우회 중...")
-    # 1 잠깐 뒤로 빠짐
+def avoid_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
+    print("장애물 감지! 우회 시작...")
     t.backward(30)
-    # 2 각도를 옆으로 틀고 앞으로 살짝 이동해 장애물 경계 벗어남
-    t.right(60)
-    for _ in range(10):
+    # 무작위 각도: 90도~180도 사이 랜덤 회전 (반대 방향으로 확실히 틀기)
+    turn_angle = random.randint(90, 180)
+    t.right(turn_angle)
+    
+    # 회피 이동 거리
+    moved_distance = 0
+    while is_collided_with_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
         t.forward(10)
+        moved_distance += 10
         time.sleep(0.02)
+        # 안전장치: 너무 오래 회피하면 탈출 시도
+        if moved_distance > 300:
+            break
+    print("장애물 벗어남!")
     
 #메인 이동 루프: 시작점에서 종점까지 이동하며 회피
     
@@ -78,8 +84,8 @@ t.setheading(35)
 while not is_arrived(t, goal_x, goal_y):
     t.forward(10)
     if is_collided_with_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
-        avoid_obstacle(t)
-        # 3️⃣ 피한 뒤 현재 위치에서 목표 방향 재조준
+        avoid_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2)
+        # 장애물 벗어나면 목표 방향 재설정
         x, y = t.position()
         dx = goal_x - x
         dy = goal_y - y
