@@ -77,8 +77,7 @@ def is_arrived(t, target_x, target_y, tolerance=100):
     distance = math.sqrt((target_x - current_x) ** 2 + (target_y - current_y) ** 2)
     return distance <= tolerance
 
-# 예시 실행:
-# 거북이가 이동을 끝낸 뒤 호출하면 됨.
+# 거북이가 이동 후 출력
 if is_arrived(t, 300, 100):
     print("목표 지점에 도착했습니다!")
 else:
