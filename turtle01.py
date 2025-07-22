@@ -62,5 +62,25 @@ x3 = √482500 = 694.6 (직선거리)
 t.fd(330) + t.fd(70) + t.fd(150) + t.fd(230)
 = t.fd(780)
 
-
 '''
+
+#목표 지점 도달 확인 함수
+import math
+
+def is_arrived(t, target_x, target_y, tolerance=100):
+    """
+    t: 거북이 객체
+    target_x, target_y: 목표 좌표
+    tolerance: 허용 오차 (픽셀)
+    """
+    current_x, current_y = t.position()
+    distance = math.sqrt((target_x - current_x) ** 2 + (target_y - current_y) ** 2)
+    return distance <= tolerance
+
+# 예시 실행:
+# 거북이가 이동을 끝낸 뒤 호출하면 됨.
+if is_arrived(t, 300, 100):
+    print("목표 지점에 도착했습니다!")
+else:
+    print("아직 목표 지점에 도달하지 못했습니다.")
+
