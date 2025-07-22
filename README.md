@@ -1,6 +1,7 @@
 # Turtle01
 ### 무인이동체 알고리즘 수업
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
 ```
 # Turtle 기본 틀 생성 / 시작점과 종점 생성
