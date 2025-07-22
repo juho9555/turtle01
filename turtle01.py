@@ -33,7 +33,7 @@ t.goto(-300,-250)
 t.pendown()
 
 #목표 지점 도달 확인 함수
-def is_arrived(t, target_x, target_y, tolerance=100):
+def is_arrived(t, target_x, target_y, tolerance=15):
     """
     target_x, target_y: 목표 좌표
     tolerance: 허용 오차 (픽셀)
@@ -53,7 +53,9 @@ def is_collided_with_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
     
 
 # 장애물 회피 함수 구현
+
 def avoid_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
+    
     print("장애물 감지! 우회 시작...")
     t.backward(30)
     # 무작위 각도: 90도~180도 사이 랜덤 회전 (반대 방향으로 확실히 틀기)
@@ -69,12 +71,23 @@ def avoid_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
         # 안전장치: 너무 오래 회피하면 탈출 시도
         if moved_distance > 300:
             break
+    
+    
+    print("장애물 충돌! 회피 시작...")
+    t.backward(40)  # 충분히 후진
+    
+    # 장애물 주위를 돌면서 완전히 벗어날 때까지 반복
+    turn_angle = 45  # 45도씩 회전하며 빙글빙글
+    while is_collided_with_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
+        t.right(turn_angle)
+        t.forward(15)
+        time.sleep(0.02)
     print("장애물 벗어남!")
     
 #메인 이동 루프: 시작점에서 종점까지 이동하며 회피
     
 #목표 좌표와 장애물 좌표
-goal_x, goal_y = 300, 100
+goal_x, goal_y = 300, 150
 obs_x1, obs_y1 = 0, -100
 obs_x2, obs_y2 = 100, 0
 
@@ -94,13 +107,6 @@ while not is_arrived(t, goal_x, goal_y):
     time.sleep(0.05)
 
 print("목표 지점에 도착했습니다!")
-    
-    
-# 도착 여부 출력
-if is_arrived(t, 300, 100):
-    print("목표 지점에 도착했습니다!")
-else:
-    print("아직 목표 지점에 도달하지 못했습니다.")
     
 # 장애물 충돌 여부 출력
 if is_collided_with_obstacle(t, 0, -100, 100, 0):
