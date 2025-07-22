@@ -56,8 +56,11 @@ def avoid_obstacle(t):
 
 # 장애물이 감지되면 오른쪽으로 30도 틀고 전진
 
-    print("장애물 감지! 우회 중...")
-    t.right(45)   # 더 크게 꺾음
+    print("장애물 충돌! 후진하여 우회 중...")
+    # 1 잠깐 뒤로 빠짐
+    t.backward(30)
+    # 2 각도를 옆으로 틀고 앞으로 살짝 이동해 장애물 경계 벗어남
+    t.right(60)
     for _ in range(10):
         t.forward(10)
         time.sleep(0.02)
@@ -76,7 +79,7 @@ while not is_arrived(t, goal_x, goal_y):
     t.forward(10)
     if is_collided_with_obstacle(t, obs_x1, obs_y1, obs_x2, obs_y2):
         avoid_obstacle(t)
-        # ⚡️ 우회 후 목표 재조준
+        # 3️⃣ 피한 뒤 현재 위치에서 목표 방향 재조준
         x, y = t.position()
         dx = goal_x - x
         dy = goal_y - y
